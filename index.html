@@ -1,0 +1,55 @@
+<!doctype HTML>
+<html>
+  <head>
+    <title>
+      Index
+    </title>
+  </head>
+  <body>
+    <h1>
+      Welcome to ML Hub!!!
+    </h1>
+    <div style="position:absolute; top:100px; left:100px">
+      <input type="button" value="Get Data" onclick="get_data()"></input>
+      <div>
+        <table style="width:100%; margin-top: 10px; display: none;" id="tbl">
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Department</th>
+          </tr>
+          <tr>
+            <td id="a">Jill</td>
+            <td id="b">Smith</td>
+            <td id="c">50</td>
+          </tr>
+          <tr>
+            <td id="d">Eve</td>
+            <td id="e">Jackson</td>
+            <td id="f">94</td>
+          </tr>
+        </table>
+      </div>
+    </div>
+  </body>
+  <script>
+    function get_data() {
+      const Http = new XMLHttpRequest();
+      const url='http://localhost:8081/api/data';
+      Http.open("GET", url);
+      Http.send();
+      Http.onreadystatechange = (e) => {
+        console.log(Http.responseText)
+        res = JSON.parse(Http.responseText)
+        document.getElementById("a").innerText = res.data[0]['id']
+        document.getElementById("b").innerText = res.data[0]['name']
+        document.getElementById("c").innerText = res.data[0]['dept']
+        document.getElementById("d").innerText = res.data[1]['id']
+        document.getElementById("e").innerText = res.data[1]['name']
+        document.getElementById("f").innerText = res.data[1]['dept']
+
+        document.getElementById("tbl").style.display = "block"
+      }
+    }
+  </script>
+</html>
